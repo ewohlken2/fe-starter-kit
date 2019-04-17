@@ -1,15 +1,15 @@
 import { camelize } from "Utility/string";
-import { find, parseDomForOpts } from "../services/dom";
+import { find, parseDomForOpts, each } from "../utility/dom";
 
 export default class DomComponent {
+    static cache = {};
     el;
-    opts = {};
 
     constructor(el, opts = {}) {
+        
         if(!el) {
             return false;
         }
-
         
         this.el = el;
         this.el.classList.add('js');
@@ -17,17 +17,6 @@ export default class DomComponent {
         if(opts) {
             this.opts = Object.assign({}, opts, parseDomForOpts(el, Object.keys(opts).map(key => camelize(key))));
         }
-
-        console.log(this.opts)
-    }
-
-    static fromTemplate(data) {
-        const html = this.template(data);
-        const div = document.createElement('div');
-        div.innerHTML = html;
-        const el = div.firstElementChild;
-
-        return new this(el);
     }
 
     loaded() {
@@ -37,6 +26,26 @@ export default class DomComponent {
     find(selector) {
         return find(this.el, selector);
     }
-}
 
-DomComponent.refs = {};
+    fromNodeRef(nodeRef) {
+        if(DomComponent.cache[nodeRef]) {
+            return DomComponent.cache[nodeRef];
+        }
+    }
+
+    static loadEntryComponents(cmps) {
+        cmps.forEach((cmp) => {
+            if(!cmp.name) {
+                console.error('entry component needs a name: ', cmp);
+            }
+    
+            let cmpsOnPage = document.querySelectorAll(`[data-js-component='${cmp.name}']`);
+    
+            if(cmpsOnPage.length) {
+                each(cmpsOnPage, (el) => {
+                    DomComponent.cache[el] = new cmp(el);
+                });
+            }
+        })   
+    }
+}

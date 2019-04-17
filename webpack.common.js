@@ -9,6 +9,7 @@ module.exports = {
             Services: path.resolve(__dirname, 'src/js/services'),
             Library: path.resolve(__dirname, 'src/js/lib'),
             Utility: path.resolve(__dirname, 'src/js/utility'),
+            Vendor: path.resolve(__dirname, 'src/js/vendor'),
             Widgets: path.resolve(__dirname, 'src/widgets'),
             Header: path.resolve(__dirname, 'src/header'),
             Footer: path.resolve(__dirname, 'src/footer'),
@@ -26,6 +27,10 @@ module.exports = {
                 options: { babelrc: true },
                 include: [
                     path.resolve(__dirname, 'src')
+                ],
+                exclude: [
+                    /node_modules/,
+                    /particles.js/
                 ]
             },
             {

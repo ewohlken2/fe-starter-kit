@@ -1,5 +1,5 @@
 import DomComponent from "../js/lib/DomComponent";
-import { each } from "../js/services/dom";
+import { each } from "../js/utility/dom";
 
 export default class ExampleWidget extends DomComponent {
     static name = 'example';

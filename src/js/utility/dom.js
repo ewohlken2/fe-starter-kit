@@ -1,19 +1,3 @@
-export function loadEntryComponents(cmps) {
-    cmps.forEach((cmp) => {
-        if(!cmp.name) {
-            console.error('entry component needs a name: ', cmp);
-        }
-
-        let cmpsOnPage = document.querySelectorAll(`[data-js-component='${cmp.name}']`);
-
-        if(cmpsOnPage.length) {
-            each(cmpsOnPage, (el) => {
-                new cmp(el);
-            });
-        }
-    })   
-}
-
 export function each(nodeList, cb) {
     if(!nodeList) {
         return;

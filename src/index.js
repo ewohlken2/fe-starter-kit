@@ -2,14 +2,15 @@ import "Scss/styles.scss";
 import "Library/polyfills";
 
 import { onLoad } from 'Utility/browser-events';
-import { loadEntryComponents } from "./js/services/dom";
 import ExampleWidget from "./widgets/example.widget";
+import DomComponent from "./js/lib/DomComponent";
+import ParticleBannerComponent from "./components/particle-banner/particle-banner.component";
 
 // list of components that will fire conditionally depending on whether
 // the static selector property on them matches any dom elements
 const components = [
     // RangeSelectComponent,
-    // DropdownComponent
+    ParticleBannerComponent,
     ExampleWidget
 ];
 
@@ -29,6 +30,6 @@ function init() {
 
     onLoad(() => {
         // GoogleService.init();
-        loadEntryComponents(components);
+        DomComponent.loadEntryComponents(components);
     })
 }
